@@ -10,6 +10,7 @@ import {
   StyleSheet,
   PanResponder,
   View,
+  Text,
   Easing
 } from "react-native";
 
@@ -266,6 +267,20 @@ var Slider = React.createClass({
           onLayout={this._measureTrack} />
         <Animated.View style={[mainStyles.track, trackStyle, minimumTrackStyle]} />
         <Animated.View
+          style={[
+            mainStyles.value,
+            {
+              transform: [
+                { translateX: thumbLeft },
+                { translateY: -(trackSize.height + thumbSize.height) / 2 }
+              ],
+              ...valueVisibleStyle
+            }
+          ]}
+	>
+	  <Text>{parseInt(this._getCurrentValue())}</Text>
+	</Animated.View>
+	<Animated.View
           onLayout={this._measureThumb}
           style={[
             {backgroundColor: thumbTintColor},
@@ -514,6 +529,11 @@ var defaultStyles = StyleSheet.create({
     width: THUMB_SIZE,
     height: THUMB_SIZE,
     borderRadius: THUMB_SIZE / 2,
+  },
+  value: {
+    position: 'absolute',
+    width: THUMB_SIZE,
+    height: THUMB_SIZE,
   },
   touchArea: {
     position: 'absolute',
